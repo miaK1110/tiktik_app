@@ -1,17 +1,22 @@
 import type { NextPage } from 'next';
 import axios from 'axios';
+import { Video } from '../types';
 
-const Home: NextPage = () => {
+interface IProps {
+  videos: Video[];
+}
+
+const Home = ({ videos }: IProps) => {
   return <h1 className='text-3xl font-bold underline'>Test</h1>;
 };
 
 export const getServerSideProps = async () => {
-  const response = await axios.get(`http://localhost:3000/api/post`);
+  const { data } = await axios.get(`http://localhost:3000/api/post`);
 
-  console.log(response.data.name);
+  // console.log(data);
 
   return {
-    props: {response.data.name},
+    props: { videos: data },
   };
 };
 
