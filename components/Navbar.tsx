@@ -24,7 +24,16 @@ const Navbar = () => {
         </div>
       </Link>
       <div className=''>SEARCH</div>
-      <div className=''>{user ? <div>Logged in</div> : <GoogleLogin />}</div>
+      <div className=''>
+        {user ? (
+          <div>Logged in</div>
+        ) : (
+          <GoogleLogin
+            onSuccess={(res) => console.log(res)}
+            onError={() => console.log('err')}
+          />
+        )}
+      </div>
     </div>
   );
 };
