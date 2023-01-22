@@ -19,6 +19,9 @@ const Upload = () => {
   const [topic, setTopic] = useState<String>(topics[0].name);
   const [savingPost, setSavingPost] = useState<Boolean>(false);
 
+  const { userProfile }: { userProfile: any } = useAuthStore();
+  const router = useRouter();
+
   const uploadVideo = async (e: any) => {
     const selectedFile = e.target.files[0];
     const fileTypes = ['video/mp4', 'video/webm', 'video/ogg'];
@@ -39,7 +42,31 @@ const Upload = () => {
     }
   };
 
-  const handleDiscard = () => {};
+  const handleDiscard = async () => {
+    if (caption && videoAsset?._id && topic) {
+      setSavingPost(true);
+
+      const document = {
+        _type: 'post',
+        caption,
+        video: {
+          _type: 'file',
+          asset: {
+            _type: 'reference',
+            _ref: videoAsset?._id,
+          },
+        },
+        userId: userProfile?._id,
+        postedBy: {
+          _type: 'postedBy',
+          _ref: userProfile?._id,
+        },
+        topic: topic,
+      };
+      await axios.post('http://localhost:3000/api/post', document);
+      router.push('/');
+    }
+  };
   const handlePost = () => {};
   return (
     <div className='flex w-full h-full absolute left-0 top-[60px] lg:top-[70px] mb-10 pt-10 lg:pt-20 bg-[#F8F8F8] justify-center'>
