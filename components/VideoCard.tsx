@@ -27,6 +27,13 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
     }
   };
 
+  useEffect(() => {
+    // if we have valid video selected
+    if (post && videoRef?.current) {
+      videoRef.current.muted = isVideoMuted;
+    }
+  }, [post, isVideoMuted]);
+
   return (
     <div className='flex flex-col border-b-2 border-gray-200 pb-6'>
       <div className=''>
@@ -52,10 +59,7 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
                 <p>
                   {post.postedBy.userName}
                   {''}
-                  <GoVerified
-                    className='text-blue-400 text-md
-   '
-                  />
+                  <GoVerified className='text-blue-400 text-md' />
                 </p>
                 <p className='capitalize font-medium text-xs text-gray-500 hidden md:block'>
                   {post.postedBy.userName}
@@ -75,7 +79,7 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
           }}
           className='rounded-3xl'
         >
-          <Link href='/'>
+          <Link href={`/detail/${post._id}`}>
             <video
               loop
               ref={videoRef}
