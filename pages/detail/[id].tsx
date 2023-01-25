@@ -8,7 +8,9 @@ import { MdOutlineCancel } from 'react-icons/md';
 import { BsFillPlayFill } from 'react-icons/bs';
 import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
 
+import Comments from '../../components/Comments';
 import { BASE_URL } from '../../utils';
+import LikeButton from '../../components/LikeButton';
 import useAuthStore from '../../store/authStore';
 import { Video } from '../../types';
 import axios from 'axios';
@@ -47,12 +49,12 @@ const Detail = ({ postDetails }: IProps) => {
 
   const handleLike = async (like: boolean) => {
     if (userProfile) {
-      const res = await axios.put(`${BASE_URL}/api/like`, {
+      const { data } = await axios.put(`${BASE_URL}/api/like`, {
         userId: userProfile._id,
         postId: post._id,
         like,
       });
-      setPost({ ...post, likes: res.data.likes });
+      setPost({ ...post, likes: data.likes });
     }
   };
 
@@ -135,6 +137,25 @@ const Detail = ({ postDetails }: IProps) => {
                   </div>
                 </div>
               </Link>
+              <div className='px-10'>
+                <p className=' text-md text-gray-600'>{post.caption}</p>
+              </div>
+              <div className='mt-10 px-10'>
+                {userProfile && (
+                  <LikeButton
+                    likes={post.likes}
+                    handleLike={() => handleLike(true)}
+                    handleDislike={() => handleLike(false)}
+                  />
+                )}
+              </div>
+              <Comments
+                comment={comment}
+                setComment={setComment}
+                addComment={addComment}
+                comments={post.comments}
+                isPostingComment={isPostingComment}
+              />
             </div>
           </div>
         </div>
