@@ -7,10 +7,10 @@ import useAuthStore from '../store/authStore';
 import NoResults from './NoResults';
 
 interface IProps {
-  isPostingComment: boolean;
+  isPostingComment: Boolean;
   comment: string;
-  setComment: () => void;
-  addComment: () => void;
+  setComment: Dispatch<SetStateAction<string>>;
+  addComment: (e: React.FormEvent) => void;
   comments: IComment[];
 }
 
@@ -18,7 +18,7 @@ interface IComment {
   comment: string;
   length?: number;
   _key: string;
-  _postedBy: { _ref: string; _id: string };
+  postedBy: { _ref?: string; _id?: string };
 }
 
 const Comments = ({
@@ -40,19 +40,14 @@ const Comments = ({
       </div>
       {userProfile && (
         <div className='absolute bottom-0 left-0 pb-6 px-2 md:px-10'>
-          <form
-            onSubmit={(e) => {
-              serComment(e.target.value.trim());
-            }}
-            className='flex gap-4'
-          >
+          <form onSubmit={addComment} className='flex gap-4'>
             <input
               value=''
-              onChange={() => {}}
+              onChange={(e) => setComment(e.target.value)}
               placeholder='Add comment...'
               className='bg-primary px-6 py-4 text-md font-medium border-2 w-[250px] md:w-[700px] lg:w-[350px] border-gray-100 focus:outline-none focus:border-2 focus:border-gray-300 flex-1 rounded-lg'
             />
-            <button className='text-md text-gray-400' onClick={() => {}}>
+            <button className='text-md text-gray-400' onClick={addComment}>
               {isPostingComment ? 'Commenting..' : 'Comment'}
             </button>
           </form>
