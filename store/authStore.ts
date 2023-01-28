@@ -11,7 +11,7 @@ const authStore = (set: any) => ({
   fetchAllUsers: async () => {
     const response = await axios.get(`${BASE_URL}/api/users`);
 
-    set({ allUsers: resoponse.data });
+    set({ allUsers: response.data });
   },
 });
 

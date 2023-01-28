@@ -1,9 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  optimizeFonts: true,
   images: {
-    domains: ['lh3.googleusercontent.com'],
+    domains: [
+      'lh3.googleusercontent.com',
+      'cdn.pixabay.com',
+      'p16-amd-va.tiktokcdn.com',
+      'image.shutterstock.com',
+      'source.unsplash.com',
+    ],
   },
 };
 

@@ -39,7 +39,7 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
       <div className=''>
         <div className='flex gap-3 p-2 cursor-pointer font-semibold rounded'>
           <div className='md:w-16 md:h-16 w-10 h-10'>
-            <Link href='/'>
+            <Link href={`/profile/${post.postedBy._id}`}>
               {/* can't put image as a child component of a Link */}
               <>
                 <Image
@@ -54,7 +54,7 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
             </Link>
           </div>
           <div className='flex items-center gap-2'>
-            <Link href='/'>
+            <Link href={`/profile/${post.postedBy._id}`}>
               <div className='flex gap-2 items-center md:text-md font-bold text-primary'>
                 <p>
                   {post.postedBy.userName}

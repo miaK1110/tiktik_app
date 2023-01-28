@@ -5,14 +5,16 @@ import Link from 'next/link';
 import GoogleLogin from 'react-google-login';
 import { AiFillHome, AiOutlineMenu } from 'react-icons/ai';
 import { ImCancelCircle } from 'react-icons/im';
-
 import Discover from './Discover';
 import SuggestedAccounts from './SuggestedAccounts';
+
 import Footer from './Footer';
+import useAuthStore from '../store/authStore';
 
 const Sidebar = () => {
   const [showSidebar, setshowSidebar] = useState(true);
   const userProfile = false;
+  const { fetchAllUsers, allUsers }: any = useAuthStore();
 
   const normalLink =
     'flex items-center gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor:pointer font-semibold text-[#F51997] rounded';
@@ -62,7 +64,10 @@ const Sidebar = () => {
             </div>
           )} */}
           <Discover />
-          <SuggestedAccounts />
+          <SuggestedAccounts
+            fetchAllUsers={fetchAllUsers}
+            allUsers={allUsers}
+          />
           <Footer />
         </div>
       )}
